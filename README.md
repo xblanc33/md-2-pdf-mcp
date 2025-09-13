@@ -4,7 +4,7 @@ MCP PDF Server
 An MCP (Model Context Protocol) server that converts Markdown into PDF.
 
 Features
-- Tool: `pdf.from_markdown` — convert inline Markdown or a file path to a PDF.
+- Tools: `pdf_from_markdown` (primary), `md_to_pdf` (alias) — convert inline Markdown or a file path to a PDF.
 - Options for paper format and orientation.
 - Sensible defaults with an `output/` folder.
 
@@ -31,16 +31,38 @@ npm start
 Configure in an MCP-compatible client by pointing to the compiled binary or `npm start` command.
 
 Tools
-- `pdf.from_markdown`
-  - input:
-    - `markdown` (string, optional): Inline Markdown content.
-    - `path` (string, optional): Path to a `.md` file.
-    - `outputPath` (string, optional): Desired output PDF path.
-    - `paperFormat` (string, optional): One of `A4`, `Letter`, `Legal`.
-    - `paperOrientation` (string, optional): `portrait` or `landscape`.
-    - Exactly one of `markdown` or `path` is required.
-  - output:
-    - Returns a text message with the absolute path to the generated PDF.
+- `pdf_from_markdown` (primary) / `md_to_pdf` (alias)
+  - Purpose: Generate a PDF from Markdown.
+  - Inputs:
+    - `markdown` (string, optional): Inline Markdown content. If set, `path` is ignored.
+    - `path` (string, optional): Absolute or relative path to a `.md` file. Ignored if `markdown` is provided.
+    - `outputPath` (string, optional): Output PDF path. Defaults to `output/<timestamp>.pdf` and creates missing directories.
+    - `paperFormat` (string, optional): `A4` | `Letter` | `Legal` (default: `A4`).
+    - `paperOrientation` (string, optional): `portrait` | `landscape` (default: `portrait`).
+    - Exactly one of `markdown` or `path` must be provided. If both are present, `markdown` takes precedence.
+  - Output:
+    - Returns a text message containing the absolute path to the created PDF.
+  - Example (inline):
+    ```json
+    {
+      "tool": "md_to_pdf",
+      "arguments": {
+        "markdown": "# Hello\nThis will render to PDF.",
+        "paperFormat": "A4"
+      }
+    }
+    ```
+  - Example (file path):
+    ```json
+    {
+      "tool": "pdf_from_markdown",
+      "arguments": {
+        "path": "examples/sample.md",
+        "outputPath": "output/sample.pdf",
+        "paperOrientation": "landscape"
+      }
+    }
+    ```
 
 Notes
 - This server uses Playwright (Chromium) to render HTML generated from Markdown and print to PDF.
