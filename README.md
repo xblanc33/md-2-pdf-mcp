@@ -1,12 +1,12 @@
 MCP PDF Server
 ===============
 
-An MCP (Model Context Protocol) server that converts Markdown into PDF.
+An MCP (Model Context Protocol) server exposing tools to render Markdown into PDF.
 
-Features
-- Tools: `pdf_from_markdown` (primary), `md_to_pdf` (alias) — convert inline Markdown or a file path to a PDF.
-- Options for paper format and orientation.
-- Sensible defaults with an `output/` folder.
+What’s included
+- MCP tools: `pdf_from_markdown` (primary) and `md_to_pdf` (alias).
+- Accepts inline Markdown or a file path.
+- Options for paper format and orientation; sensible `output/` defaults.
 
 Prerequisites
 - Node.js 18+ recommended.
@@ -28,18 +28,18 @@ Run (stdio)
 npm start
 ```
 
-Configure in an MCP-compatible client by pointing to the compiled binary or `npm start` command.
+Configure in your MCP-compatible client by pointing to the compiled binary or `npm start` command.
 
-Tools
-- `pdf_from_markdown` (primary) / `md_to_pdf` (alias)
+MCP Tools
+- Tool ids: `pdf_from_markdown` (primary) and `md_to_pdf` (alias for discoverability)
   - Purpose: Generate a PDF from Markdown.
   - Inputs:
     - `markdown` (string, optional): Inline Markdown content. If set, `path` is ignored.
     - `path` (string, optional): Absolute or relative path to a `.md` file. Ignored if `markdown` is provided.
-    - `outputPath` (string, optional): Output PDF path. Defaults to `output/<timestamp>.pdf` and creates missing directories.
+    - `outputPath` (string, optional): Desired output PDF path. Defaults to `output/<timestamp>.pdf` and creates missing directories.
     - `paperFormat` (string, optional): `A4` | `Letter` | `Legal` (default: `A4`).
     - `paperOrientation` (string, optional): `portrait` | `landscape` (default: `portrait`).
-    - Exactly one of `markdown` or `path` must be provided. If both are present, `markdown` takes precedence.
+    - Provide exactly one of `markdown` or `path`. If both are set, `markdown` takes precedence.
   - Output:
     - Returns a text message containing the absolute path to the created PDF.
   - Example (inline):
@@ -64,9 +64,40 @@ Tools
     }
     ```
 
+Tool Schema (compact)
+```
+tools:
+  - id: pdf_from_markdown
+    alias: md_to_pdf
+    params:
+      markdown?: string                # Inline Markdown (preferred if both set)
+      path?: string                    # Path to a .md file
+      outputPath?: string              # Output PDF path (default: output/<timestamp>.pdf)
+      paperFormat?: 'A4'|'Letter'|'Legal'      # default: 'A4'
+      paperOrientation?: 'portrait'|'landscape' # default: 'portrait'
+    constraints:
+      - Provide exactly one of markdown or path (if both provided, markdown is used)
+    result:
+      - type: text
+        text: "PDF created at: <absolute path>"
+```
+
+Client configuration (example)
+If your MCP client supports JSON configuration for a stdio server, a minimal entry might look like:
+```json
+{
+  "servers": {
+    "mcp-pdf": {
+      "command": "node",
+      "args": ["dist/index.js"]
+    }
+  }
+}
+```
+
 Notes
-- This server uses Playwright (Chromium) to render HTML generated from Markdown and print to PDF.
-- On first install, Playwright may download a browser. You can also point it to an existing Chrome/Chromium via environment config.
+- Uses Playwright (Chromium) to render HTML from Markdown and print to PDF.
+- On first install, Playwright may download a browser. You can also point it to an existing Chrome/Chromium.
 
 One‑liner with npx
 - After this package is published to npm, you can run the server directly:

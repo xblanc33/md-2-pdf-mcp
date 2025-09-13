@@ -1,7 +1,7 @@
 {
   "name": "md-2-pdf-mcp",
-  "version": "1.0.2",
-  "description": "An MCP server that converts Markdown to PDF using Playwright.",
+  "version": "1.0.4",
+  "description": "MCP server exposing pdf_from_markdown/md_to_pdf tools to render Markdown (inline or file) to PDF with output path, paper format and orientation options.",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",

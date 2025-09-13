@@ -11,7 +11,7 @@ const writeFile = promisify(fs.writeFile);
 
 export function createServer() {
   const mcpServer = new McpServer(
-    { name: "mcp-pdf", version: "0.1.0" },
+    { name: "mcp-pdf", version: "1.0.4" },
     { capabilities: { tools: {} } }
   );
 
