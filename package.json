@@ -1,6 +1,6 @@
 {
-  "name": "mcp-pdf",
-  "version": "1.0.0",
+  "name": "md-2-pdf-mcp",
+  "version": "1.0.2",
   "description": "An MCP server that converts Markdown to PDF using Playwright.",
   "main": "dist/index.js",
   "scripts": {
@@ -22,14 +22,24 @@
   "author": "Xavier Blanc (xblanc33)",
   "license": "ISC",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xblanc33/md-2-pdf-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/xblanc33/md-2-pdf-mcp/issues"
+  },
+  "homepage": "https://github.com/xblanc33/md-2-pdf-mcp#readme",
   "engines": {
     "node": ">=18"
   },
   "bin": {
-    "mcp-pdf": "dist/index.js"
+    "md-2-pdf-mcp": "bin/md-2-pdf-mcp.js",
+    "mcp-pdf": "bin/md-2-pdf-mcp.js"
   },
   "files": [
     "dist",
+    "bin",
     "README.md"
   ],
   "dependencies": {
