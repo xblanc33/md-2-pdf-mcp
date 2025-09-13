@@ -70,8 +70,9 @@ Notes
 
 One‑liner with npx
 - After this package is published to npm, you can run the server directly:
-  - `npx mcp-pdf`
-  - The package defines a `bin` entry and a `postinstall` that installs Chromium.
+  - `npx -y md-2-pdf-mcp` (runs the `md-2-pdf-mcp` bin)
+  - Or explicitly: `npx -y -p md-2-pdf-mcp mcp-pdf`
+  - The package defines `bin` entries and a `postinstall` that installs Chromium.
 - From the local repo (without publishing):
   - `npx --yes .`
   - This uses the `bin` in package.json and the `prepare` script to build.
